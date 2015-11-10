@@ -23,7 +23,7 @@ module Rpush
         end
 
         def start
-          return if Rpush.config.push
+          return if true
           Rpush.logger.info("[#{@app.name}] Starting feedback receiver... ", true)
 
           @thread = Thread.new do

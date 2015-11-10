@@ -45,6 +45,7 @@ module Rpush
 
       def self.feed_forever
         loop do
+          Rpush.logger.info("feed_forever: should_stop: #{should_stop}")
           enqueue_notifications
           interruptible_sleeper.sleep(Rpush.config.push_poll)
           return if should_stop

@@ -13,6 +13,7 @@ module Rpush
       @runners = {}
 
       def self.enqueue(notifications)
+        Rpush.logger.info("enqueueing #{notifications.size} notifications")
         notifications.group_by(&:app_id).each do |app_id, group|
           start_app_with_id(app_id) unless @runners[app_id]
           @runners[app_id].enqueue(group) if @runners[app_id]

@@ -9,7 +9,7 @@ module Rpush
         end
 
         def perform
-          @connection.write(batch_to_binary)
+          #@connection.write(batch_to_binary)
           mark_batch_delivered
           describe_deliveries
         rescue Rpush::Daemon::TcpConnectionError => error
@@ -34,7 +34,7 @@ module Rpush
 
         def describe_deliveries
           @batch.each_notification do |notification|
-            log_info("#{notification.id} sent to #{notification.device_token}")
+            # log_info("#{notification.id} sent to #{notification.device_token}")
           end
         end
       end
