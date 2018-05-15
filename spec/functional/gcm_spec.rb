@@ -43,4 +43,13 @@ describe 'GCM' do
       notification.reload
     end.to change(notification, :deliver_after).to(kind_of(Time))
   end
+
+  it 'retries notification that fail due to a Mysql::Error' do
+    allow_any_instance_of(Rpush::Gcm::App).to receive(:auth_key).and_raise(Mysql2::Error.new('ouch'))
+    expect(notification.deliver_after).to be_nil
+    expect do
+      Rpush.push
+      notification.reload
+    end.to change(notification, :deliver_after).to(kind_of(Time))
+  end if active_record?
 end
